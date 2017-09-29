@@ -2,7 +2,7 @@
 
 **Introduction**
 
-These naming conventions are adapted from the SUIT CSS framework, itself an evolution of methodologies from BEM, OOCSS, and SMACSS. which seek to challenge the cascade of styles with meaningful naming coventions designed to limit the raw number of global classes through block namespaces and class driven relationships, contrasted against complex, generic, and therefore often brittle cascading selector expressions.  This is to say, it relies on _structured class names_ and _meaningful hyphens_ (i.e., not using hyphens merely to separate words). This is to help work around the current limits of applying CSS to the DOM (i.e., the lack of style encapsulation) and to better communicate the relationships between classes.
+These naming conventions are adapted from the SUIT CSS framework, itself an evolution of methodologies from BEM, OOCSS, and SMACSS, **which seek to challenge the cascade of styles with meaningful naming coventions designed to limit the raw number of global classes through block namespaces and class driven relationships**, contrasted against complex, generic, and therefore often brittle cascading selector expressions.  This is to say, it relies on _structured class names_ using _meaningful hyphens_ (i.e., not using hyphens merely to separate words) to scope styles. This is to help work around the current limits of applying CSS to the DOM (i.e., the lack of style encapsulation) and to better communicate the relationships between classes.
 
 **Table of contents**
 
@@ -18,6 +18,8 @@ These naming conventions are adapted from the SUIT CSS framework, itself an evol
   * [Classes vs IDs](#hooks)
   * [!important](#important)
   * [Overqualified elements](#overqualified)
+  * [Using the Filesystem](#filesystem)
+  * [Is everything an island then?](#island)
 * [Take Away](#takeaway)
 * [Attributions and Further Reading](#attributions)
 
@@ -166,6 +168,14 @@ Writing selectors such as li.active are unnecessary unless the element name caus
 
 Removing the element name also loosens the coupling between your CSS and your HTML, allowing you to change the element on which the class is used without also needing to update the CSS.
 
+<a name="filesystem"></a>
+### Using the Filesystem
+One question remains: Given this approach of limitting the number of global classes into component classes and utility classes, how do we ensure even these global classes do not collide? A simple solution is to use the filesytem: one component per file, with the filename the same as the component all in the same directory (no nested directories). The filesystem will ensure against collisions.
+
+<a name="island"></a>
+### Is Everything an Island, then?
+Every component is an island - completelying encapsulating its styles without any "leaking" of styles outside of itself. However, that is not to say every component necessarily inherits nothing. The amount of cascade that comes to the components is up to your team's best judgement. Base typography and default link styling seems like reasonable ways to use the cascade.
+
 <a name="takeaway"></a>
 ## The Take Away
 * Classes are to be named meaningfully.
@@ -198,8 +208,8 @@ EXAMPLE:
 
 ```html
 <article class="Tweet is-open js-tweet">
-  <header class="Tweet-header tweet-header--large">
-    <img class="Tweet-avatar js-tweetAvatar" src="{$src}" alt="{$alt}">
+  <header class="Tweet-header Tweet-header--large">
+    <img class="Tweet-avatar" src="{$src}" alt="{$alt}">
     …
   </header>
   <div class="Tweet-body Tweet-body--large">
@@ -209,7 +219,7 @@ EXAMPLE:
 ```
 ```css
 .Tweet {...}                       /* .ComponentName                       */
-.Tweet.is-open {...}               /* .ComponentName.is-StateOfComponent   */
+.Tweet.is-open {...}               /* .ComponentName.is-stateOfComponent   */
 .Tweet--large {...}                /* .ComponentName--modifier             */
 .Tweet-header {...}                /* .ComponentName-descendant            */
 .Tweet-header--large {...}         /* .ComponentName-descendant--modifier  */
@@ -220,8 +230,9 @@ EXAMPLE:
 ## Attributions and Further Reading
 * ["About HTML semantics and front-end architecture"](http://nicolasgallagher.com/about-html-semantics-front-end-architecture/) by [Nicolas Gallagher](https://github.com/necolas).
 * [SUIT CSS](https://github.com/suitcss/suit) methodology by [Nicolas Gallagher](https://github.com/necolas).
-* [The guidelines](https://gist.github.com/fat/a47b882eb5f84293c4ed) [Jacob Thorton](https://github.com/fat) wrote for [Medium](https://medium.com/@fat/mediums-css-is-actually-pretty-fucking-good-b8e2a6c78b06).
+* [The guidelines](https://gist.github.com/fat/a47b882eb5f84293c4ed) [Jacob Thorton](https://github.com/fat) [wrote while refactoring](https://medium.com/@fat/mediums-css-is-actually-pretty-fucking-good-b8e2a6c78b06) Medium's CSS.
 * ["Cascading Shit Show"](https://www.youtube.com/watch?v=iniwPUEbPUM) talk by [Jacob Thorton](https://github.com/fat).
+* ["Stop the Cascade"](http://markdotto.com/2012/03/02/stop-the-cascade/) by [Mark Otto] for his [styleguide](http://codeguide.co/#css-classes)
 * ["Side Effects in CSS"](http://philipwalton.com/articles/side-effects-in-css/) by [Philip Walton](https://github.com/philipwalton)
 * ["CSS Architecture"](http://philipwalton.com/articles/css-architecture/) by [Philip Walton](https://github.com/philipwalton)
 * ["Solidify CSS naming & structure conventions"](https://github.com/google/web-starter-kit/issues/300) issue by [Addy Osmani]("https://github.com/addyosmani")
